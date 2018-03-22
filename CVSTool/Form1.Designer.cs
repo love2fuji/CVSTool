@@ -1,16 +1,16 @@
 ﻿namespace CVSTool
 {
-    partial class Main
+    partial class Form1
     {
         /// <summary>
-        /// 必需的设计器变量。
+        /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// 清理所有正在使用的资源。
+        /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,16 +20,16 @@
             base.Dispose(disposing);
         }
 
-        #region Windows 窗体设计器生成的代码
+        #region Windows Form Designer generated code
 
         /// <summary>
-        /// 设计器支持所需的方法 - 不要修改
-        /// 使用代码编辑器修改此方法的内容。
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabConServerLog = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -40,12 +40,12 @@
             this.dgrSendMsgLog = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dgvEPILog = new System.Windows.Forms.DataGridView();
-            this.btnExport2Excel = new System.Windows.Forms.Button();
+            this.btnStartService = new System.Windows.Forms.Button();
             this.显示ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.退出ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.btnDataExport2Excel = new System.Windows.Forms.Button();
+            this.btnStopService = new System.Windows.Forms.Button();
             this.btnExportEnergyAlarmlist = new System.Windows.Forms.Button();
             this.btnReadEnergyAlarmlist = new System.Windows.Forms.Button();
             this.btnReadSendMsgList = new System.Windows.Forms.Button();
@@ -76,7 +76,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 100);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1174, 533);
+            this.groupBox2.Size = new System.Drawing.Size(1142, 483);
             this.groupBox2.TabIndex = 33;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "状态显示";
@@ -91,7 +91,7 @@
             this.tabConServerLog.Location = new System.Drawing.Point(3, 17);
             this.tabConServerLog.Name = "tabConServerLog";
             this.tabConServerLog.SelectedIndex = 0;
-            this.tabConServerLog.Size = new System.Drawing.Size(1168, 513);
+            this.tabConServerLog.Size = new System.Drawing.Size(1136, 463);
             this.tabConServerLog.TabIndex = 28;
             // 
             // tabPage1
@@ -100,7 +100,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1160, 487);
+            this.tabPage1.Size = new System.Drawing.Size(1128, 437);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "服务日志";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -110,7 +110,7 @@
             this.StatusSMS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.StatusSMS.Location = new System.Drawing.Point(3, 3);
             this.StatusSMS.Name = "StatusSMS";
-            this.StatusSMS.Size = new System.Drawing.Size(1154, 481);
+            this.StatusSMS.Size = new System.Drawing.Size(1122, 431);
             this.StatusSMS.TabIndex = 24;
             this.StatusSMS.Text = "";
             // 
@@ -121,7 +121,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1283, 650);
+            this.tabPage2.Size = new System.Drawing.Size(1128, 437);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "设备报警记录";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -137,7 +137,7 @@
             this.dgvMeterLiveLog.Name = "dgvMeterLiveLog";
             this.dgvMeterLiveLog.RowHeadersWidth = 50;
             this.dgvMeterLiveLog.RowTemplate.Height = 23;
-            this.dgvMeterLiveLog.Size = new System.Drawing.Size(1277, 644);
+            this.dgvMeterLiveLog.Size = new System.Drawing.Size(1122, 431);
             this.dgvMeterLiveLog.TabIndex = 0;
             // 
             // tpgSendMsgLog
@@ -146,7 +146,7 @@
             this.tpgSendMsgLog.Location = new System.Drawing.Point(4, 22);
             this.tpgSendMsgLog.Name = "tpgSendMsgLog";
             this.tpgSendMsgLog.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgSendMsgLog.Size = new System.Drawing.Size(1160, 487);
+            this.tpgSendMsgLog.Size = new System.Drawing.Size(1128, 437);
             this.tpgSendMsgLog.TabIndex = 2;
             this.tpgSendMsgLog.Text = "短信发送记录";
             this.tpgSendMsgLog.UseVisualStyleBackColor = true;
@@ -161,7 +161,7 @@
             this.dgrSendMsgLog.Name = "dgrSendMsgLog";
             this.dgrSendMsgLog.RowHeadersWidth = 10;
             this.dgrSendMsgLog.RowTemplate.Height = 23;
-            this.dgrSendMsgLog.Size = new System.Drawing.Size(1154, 481);
+            this.dgrSendMsgLog.Size = new System.Drawing.Size(1122, 431);
             this.dgrSendMsgLog.TabIndex = 0;
             // 
             // tabPage3
@@ -170,7 +170,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1283, 650);
+            this.tabPage3.Size = new System.Drawing.Size(1133, 533);
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "用能报警记录";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -185,19 +185,19 @@
             this.dgvEPILog.Location = new System.Drawing.Point(3, 3);
             this.dgvEPILog.Name = "dgvEPILog";
             this.dgvEPILog.RowTemplate.Height = 23;
-            this.dgvEPILog.Size = new System.Drawing.Size(1277, 644);
+            this.dgvEPILog.Size = new System.Drawing.Size(1127, 527);
             this.dgvEPILog.TabIndex = 1;
             // 
-            // btnExport2Excel
+            // btnStartService
             // 
-            this.btnExport2Excel.BackColor = System.Drawing.SystemColors.Control;
-            this.btnExport2Excel.Location = new System.Drawing.Point(32, 20);
-            this.btnExport2Excel.Name = "btnExport2Excel";
-            this.btnExport2Excel.Size = new System.Drawing.Size(90, 41);
-            this.btnExport2Excel.TabIndex = 19;
-            this.btnExport2Excel.Text = "导出基础数据";
-            this.btnExport2Excel.UseVisualStyleBackColor = false;
-            this.btnExport2Excel.Click += new System.EventHandler(this.btnExport2Excel_Click);
+            this.btnStartService.BackColor = System.Drawing.SystemColors.Control;
+            this.btnStartService.Location = new System.Drawing.Point(32, 20);
+            this.btnStartService.Name = "btnStartService";
+            this.btnStartService.Size = new System.Drawing.Size(90, 41);
+            this.btnStartService.TabIndex = 19;
+            this.btnStartService.Text = "导出基础数据";
+            this.btnStartService.UseVisualStyleBackColor = false;
+            this.btnStartService.Click += new System.EventHandler(this.btnStartService_Click);
             // 
             // 显示ToolStripMenuItem1
             // 
@@ -226,16 +226,15 @@
             this.notifyIcon1.Text = "短信服务";
             this.notifyIcon1.Visible = true;
             // 
-            // btnDataExport2Excel
+            // btnStopService
             // 
-            this.btnDataExport2Excel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnDataExport2Excel.Location = new System.Drawing.Point(143, 20);
-            this.btnDataExport2Excel.Name = "btnDataExport2Excel";
-            this.btnDataExport2Excel.Size = new System.Drawing.Size(88, 41);
-            this.btnDataExport2Excel.TabIndex = 17;
-            this.btnDataExport2Excel.Text = "导出原来配置";
-            this.btnDataExport2Excel.UseVisualStyleBackColor = false;
-            this.btnDataExport2Excel.Click += new System.EventHandler(this.btnDataExport2Excel_Click);
+            this.btnStopService.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnStopService.Location = new System.Drawing.Point(143, 20);
+            this.btnStopService.Name = "btnStopService";
+            this.btnStopService.Size = new System.Drawing.Size(88, 41);
+            this.btnStopService.TabIndex = 17;
+            this.btnStopService.Text = "停止服务";
+            this.btnStopService.UseVisualStyleBackColor = false;
             // 
             // btnExportEnergyAlarmlist
             // 
@@ -309,8 +308,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnExport2Excel);
-            this.groupBox1.Controls.Add(this.btnDataExport2Excel);
+            this.groupBox1.Controls.Add(this.btnStartService);
+            this.groupBox1.Controls.Add(this.btnStopService);
             this.groupBox1.Controls.Add(this.btnExportEnergyAlarmlist);
             this.groupBox1.Controls.Add(this.btnReadEnergyAlarmlist);
             this.groupBox1.Controls.Add(this.btnReadSendMsgList);
@@ -319,7 +318,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 25);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1174, 75);
+            this.groupBox1.Size = new System.Drawing.Size(1142, 75);
             this.groupBox1.TabIndex = 32;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "选项";
@@ -330,20 +329,19 @@
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1174, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(1142, 25);
             this.menuStrip1.TabIndex = 31;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // Main
+            // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1174, 633);
+            this.ClientSize = new System.Drawing.Size(1142, 583);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "Main";
+            this.Name = "Form1";
             this.Text = "Form1";
             this.groupBox2.ResumeLayout(false);
             this.tabConServerLog.ResumeLayout(false);
@@ -375,12 +373,12 @@
         private System.Windows.Forms.DataGridView dgrSendMsgLog;
         private System.Windows.Forms.TabPage tabPage3;
         public System.Windows.Forms.DataGridView dgvEPILog;
-        private System.Windows.Forms.Button btnExport2Excel;
+        private System.Windows.Forms.Button btnStartService;
         private System.Windows.Forms.ToolStripMenuItem 显示ToolStripMenuItem1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 退出ToolStripMenuItem1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
-        private System.Windows.Forms.Button btnDataExport2Excel;
+        private System.Windows.Forms.Button btnStopService;
         private System.Windows.Forms.Button btnExportEnergyAlarmlist;
         private System.Windows.Forms.Button btnReadEnergyAlarmlist;
         private System.Windows.Forms.Button btnReadSendMsgList;
@@ -393,4 +391,3 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
     }
 }
-

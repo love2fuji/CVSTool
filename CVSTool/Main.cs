@@ -12,7 +12,7 @@ namespace CVSTool
             InitializeComponent();
         }
 
-        private void btnOpen_Click(object sender, EventArgs e)
+        private void btnExport2Excel_Click(object sender, EventArgs e)
         {
             /*打开文件选择窗口*/
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -33,11 +33,14 @@ namespace CVSTool
                 //将数据放到空表中  
                 dt = CSVHelper.OpenCSV(file_path);
                 //显示导入的数据
-                dataGridView1.DataSource=dt;
+                dgrSendMsgLog.DataSource = dt;
 
 
             }
+        }
 
+        private void btnDataExport2Excel_Click(object sender, EventArgs e)
+        {
 
         }
     }
