@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CVSTool.Common;
+using System;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Windows.Forms;
 
@@ -7,6 +9,8 @@ namespace CVSTool
 {
     public partial class Main : Form
     {
+        static string SqlConnectionString = Config.GetValue("MSSQLConnect");
+
         public Main()
         {
             InitializeComponent();
@@ -34,7 +38,57 @@ namespace CVSTool
                 dt = CSVHelper.OpenCSV(file_path);
                 //显示导入的数据
                 dgrSendMsgLog.DataSource = dt;
+                SQLHelper.DataTableToSQLServer(dt, SqlConnectionString);
 
+                //DataRow[] result = dt.Select("区域编码  AND 建筑编码 AND 上级区域代码 AND 区域名称");
+                //foreach (DataRow row in result)
+                //{
+                //    Console.WriteLine("{0}, {1} , {2}, {3}", row[0], row[1], row[2], row[3]);
+                //}
+
+                //CSVToSQLServer(dt);
+
+
+            }
+        }
+
+        void CSVToSQLServer( DataTable dt )
+        {
+            try
+            {
+                using (SqlConnection sqlConn = new SqlConnection(SqlConnectionString))
+                {
+                    sqlConn.Open();
+                    SqlCommand commd = new SqlCommand();
+                    commd.Connection = sqlConn;
+
+                    commd.CommandText = String.Empty;
+
+                    //DataRow[] result = dt.Select("区域编码  AND 建筑编码 AND 上级区域代码 AND 区域名称");
+                    //foreach (DataRow row in result)
+                    //{
+                    //    Console.WriteLine("{0}, {1} , {2}, {3}", row[0], row[1] , row[2] , row[3]);
+                    //}
+
+                    //foreach (DataGridViewRow row in dgrSendMsgLog.Rows)
+                    //{
+                    //    commd.CommandText = string.Format(@"insert into web_content (data1,data2,data3) values('{0}','{1}','{2}')",
+                    //        row.Cells[0].Value.ToString(),
+                    //        row.Cells[1].Value.ToString(),
+                    //        row.Cells[2].Value.ToString());
+
+                    //     int reslut=commd.ExecuteNonQuery();
+                    //}
+
+                   // int reslut = commd.ExecuteNonQuery();
+                    sqlConn.Close();
+                    Console.WriteLine("-----sql 插入：" );
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(" 错误：数据库连接失败，请设置数据库连接..."+ex);
+               // ShowLog("错误：数据库连接失败，请设置数据库连接..." + ex.Message);
 
             }
         }
