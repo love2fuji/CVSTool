@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace CVSTool.Common
         /// 报警记录导出到Excel表格
         /// </summary>
         /// <param name="dt"></param>
-        public static void ExportToExcel(System.Data.DataTable dt)
+        public static void ExportToExcel(DataTable dt)
         {
             //导出到execl  
             try

@@ -18,6 +18,18 @@ namespace CVSTool
 
         private void btnExport2Excel_Click(object sender, EventArgs e)
         {
+
+        }
+
+       
+
+        private void btnDataExport2Excel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnImportRegion_Click(object sender, EventArgs e)
+        {
             /*打开文件选择窗口*/
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = "c://";
@@ -38,63 +50,56 @@ namespace CVSTool
                 dt = CSVHelper.OpenCSV(file_path);
                 //显示导入的数据
                 dgrSendMsgLog.DataSource = dt;
-                SQLHelper.DataTableToSQLServer(dt, SqlConnectionString);
-
-                //DataRow[] result = dt.Select("区域编码  AND 建筑编码 AND 上级区域代码 AND 区域名称");
-                //foreach (DataRow row in result)
-                //{
-                //    Console.WriteLine("{0}, {1} , {2}, {3}", row[0], row[1], row[2], row[3]);
-                //}
-
-                //CSVToSQLServer(dt);
-
+                CSVToSQLServer(dt);
 
             }
         }
 
-        void CSVToSQLServer( DataTable dt )
+        void CSVToSQLServer(DataTable dt)
         {
-            try
-            {
-                using (SqlConnection sqlConn = new SqlConnection(SqlConnectionString))
-                {
-                    sqlConn.Open();
-                    SqlCommand commd = new SqlCommand();
-                    commd.Connection = sqlConn;
+            //创建表 T_ST_RegionInfo
+            string SQLString = @"ALTER TABLE [dbo].[T_ST_RegionInfo] DROP CONSTRAINT [FK_T_ST_Region_T_BD_BuildBaseInfo2]
+                                            IF EXISTS(Select 1 From Sysobjects Where Name='T_ST_RegionInfo')   
+                                                  DROP TABLE T_ST_RegionInfo   
+                                             SET ANSI_NULLS ON
+                                             SET QUOTED_IDENTIFIER ON
+                                             SET ANSI_PADDING ON
+                                            CREATE TABLE [dbo].[T_ST_RegionInfo](
+	                                            [F_BuildID] [varchar](16) NOT NULL,
+	                                            [F_RegionParentID] [varchar](20) NOT NULL,
+	                                            [F_RegionID] [varchar](20) NOT NULL,
+	                                            [F_RegionName] [nvarchar](20) NOT NULL,
+	                                            [F_MeterID] [varchar](20) NOT NULL,
+	                                            [F_MeterName] [varchar](50) NULL,
+	                                            [F_Operator] [varchar](10) NOT NULL,
+	                                            [F_Rate] [decimal](10, 2) NOT NULL
+                                            ) ON [PRIMARY]
+                                             SET ANSI_PADDING OFF
+                                             ALTER TABLE [dbo].[T_ST_RegionInfo]  WITH NOCHECK ADD  CONSTRAINT [FK_T_ST_Region_T_BD_BuildBaseInfo2] FOREIGN KEY([F_BuildID]) 
+                                               REFERENCES [dbo].[T_BD_BuildBaseInfo] ([F_BuildID])
+                                             ALTER TABLE [dbo].[T_ST_RegionInfo] CHECK CONSTRAINT [FK_T_ST_Region_T_BD_BuildBaseInfo2]
+                                            ";
+            string SQLStringRegion = @"DELETE FROM T_ST_RegionMeter
+                                       DELETE FROM T_ST_Region
+                                       INSERT INTO T_ST_Region 
+	                                        SELECT F_RegionID, MAX(F_BuildID) AS F_BuildID
+			                                       ,MAX( F_RegionParentID) AS F_RegionParentID
+			                                       ,MAX( F_RegionName) AS F_RegionName
+	                                          FROM T_ST_RegionInfo 
+	                                          GROUP BY F_RegionID";
 
-                    commd.CommandText = String.Empty;
+            string SQLStringRegionMeter = @"INSERT INTO T_ST_RegionMeter
+	                                        SELECT F_RegionID, F_MeterID, F_Operator, F_Rate
+	                                        FROM T_ST_RegionInfo ";
 
-                    //DataRow[] result = dt.Select("区域编码  AND 建筑编码 AND 上级区域代码 AND 区域名称");
-                    //foreach (DataRow row in result)
-                    //{
-                    //    Console.WriteLine("{0}, {1} , {2}, {3}", row[0], row[1] , row[2] , row[3]);
-                    //}
-
-                    //foreach (DataGridViewRow row in dgrSendMsgLog.Rows)
-                    //{
-                    //    commd.CommandText = string.Format(@"insert into web_content (data1,data2,data3) values('{0}','{1}','{2}')",
-                    //        row.Cells[0].Value.ToString(),
-                    //        row.Cells[1].Value.ToString(),
-                    //        row.Cells[2].Value.ToString());
-
-                    //     int reslut=commd.ExecuteNonQuery();
-                    //}
-
-                   // int reslut = commd.ExecuteNonQuery();
-                    sqlConn.Close();
-                    Console.WriteLine("-----sql 插入：" );
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(" 错误：数据库连接失败，请设置数据库连接..."+ex);
-               // ShowLog("错误：数据库连接失败，请设置数据库连接..." + ex.Message);
-
-            }
-        }
-
-        private void btnDataExport2Excel_Click(object sender, EventArgs e)
-        {
+            //创建表 T_ST_RegionInfo
+            SQLHelper.ExecuteSql(SQLString);
+            //将数据插入RegionInfo表
+            SQLHelper.DataTableToSQLServer(dt);
+            //将数据插入Region表
+            SQLHelper.ExecuteSql(SQLStringRegion);
+            //将数据插入RegionMeter表
+            SQLHelper.ExecuteSql(SQLStringRegionMeter);
 
         }
     }

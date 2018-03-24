@@ -1,4 +1,7 @@
-﻿DELETE  FROM T_ST_Region
+﻿USE EMS
+GO
+
+DELETE  FROM T_ST_Region
 INSERT INTO T_ST_Region 
 	select F_RegionID,max (F_BuildID) AS F_BuildID
 			,max( F_RegionParentID) AS F_RegionParentID

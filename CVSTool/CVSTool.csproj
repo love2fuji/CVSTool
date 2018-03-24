@@ -103,7 +103,12 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Common\RegionSQL.txt" />
+    <Content Include="Common\RegionSQL.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Server\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

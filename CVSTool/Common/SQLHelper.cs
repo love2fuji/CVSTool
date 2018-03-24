@@ -11,58 +11,80 @@ namespace CVSTool.Common
 {
     class SQLHelper
     {
-        public static void DataTableToSQLServer(DataTable dt, string connectString)
+        public static string connectionString = Config.GetValue("MSSQLConnect");
+        public static void CreatTable()
         {
-            string connectionString = connectString;
 
-            try
+        }
+
+
+        /// <summary>
+        /// 表是否存在
+        /// </summary>
+        /// <param name="TableName"></param>
+        /// <returns></returns>
+        public static bool TabExists(string TableName)
+        {
+            string strsql = "SELECT COUNT(*) FROM sysobjects WHERE id = object_id(N'[" + TableName + "]') AND OBJECTPROPERTY(id, N'IsUserTable') = 1";
+            //string strsql = "SELECT count(*) FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[" + TableName + "]') AND type in (N'U')";
+            object obj = GetSingle(strsql);
+            int cmdresult;
+            if ((Object.Equals(obj, null)) || (Object.Equals(obj, System.DBNull.Value)))
             {
-                //删除已经存在的表
-                using (SqlConnection sqlConn = new SqlConnection(connectionString))
+                cmdresult = 0;
+            }
+            else
+            {
+                cmdresult = int.Parse(obj.ToString());
+            }
+            if (cmdresult == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+
+        /// <summary>
+        /// 执行SQL语句，返回影响的记录数
+        /// </summary>
+        /// <param name="SQLString">SQL语句</param>
+        /// <returns>影响的记录数</returns>
+        public static int ExecuteSql(string SQLString)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLString, connection))
                 {
-                    sqlConn.Open();
-                    SqlCommand sqlStr = new SqlCommand();
-                    sqlStr.Connection = sqlConn ;
-                    sqlStr.CommandText = @"ALTER TABLE [dbo].[T_ST_RegionInfo] DROP CONSTRAINT [FK_T_ST_Region_T_BD_BuildBaseInfo2]
-                                            IF EXISTS(Select 1 From Sysobjects Where Name='T_ST_RegionInfo')   
-                                                  DROP TABLE T_ST_RegionInfo   
-                                             SET ANSI_NULLS ON
-                                             SET QUOTED_IDENTIFIER ON
-                                             SET ANSI_PADDING ON
-                                            CREATE TABLE [dbo].[T_ST_RegionInfo](
-	                                            [F_BuildID] [varchar](16) NOT NULL,
-	                                            [F_RegionParentID] [varchar](20) NOT NULL,
-	                                            [F_RegionID] [varchar](20) NOT NULL,
-	                                            [F_RegionName] [nvarchar](20) NOT NULL,
-	                                            [F_MeterID] [varchar](20) NOT NULL,
-	                                            [F_MeterName] [varchar](50) NULL,
-	                                            [F_Operator] [varchar](10) NOT NULL,
-	                                            [F_Rate] [decimal](10, 2) NOT NULL
-                                            ) ON [PRIMARY]
-                                             SET ANSI_PADDING OFF
-                                             ALTER TABLE [dbo].[T_ST_RegionInfo]  WITH NOCHECK ADD  CONSTRAINT [FK_T_ST_Region_T_BD_BuildBaseInfo2] FOREIGN KEY([F_BuildID]) 
-                                               REFERENCES [dbo].[T_BD_BuildBaseInfo] ([F_BuildID])
-                                             ALTER TABLE [dbo].[T_ST_RegionInfo] CHECK CONSTRAINT [FK_T_ST_Region_T_BD_BuildBaseInfo2]
-                                            ";
-
-                    sqlStr.ExecuteNonQuery();
-
-                    sqlConn.Close();
-                    Console.WriteLine("-----sql 插入：");
+                    try
+                    {
+                        cmd.CommandTimeout = 100;
+                        connection.Open();
+                        int rows = cmd.ExecuteNonQuery();
+                        return rows;
+                    }
+                    catch (System.Data.SqlClient.SqlException e)
+                    {
+                        connection.Close();
+                        throw e;
+                    }
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(" 错误：数据库连接失败，请设置数据库连接..." + ex);
-                // ShowLog("错误：数据库连接失败，请设置数据库连接..." + ex.Message);
+        }
 
-            }
 
+        /// <summary>
+        /// 将数据导入表中T_ST_RegionInfo
+        /// </summary>
+        /// <param name="dt"></param>
+        public static void DataTableToSQLServer(DataTable dt)
+        {
             using (SqlConnection destinationConnection = new SqlConnection(connectionString))
             {
                 destinationConnection.Open();
-
-             
                 using (SqlBulkCopy bulkCopy = new SqlBulkCopy(destinationConnection))
                 {
                     try
@@ -89,5 +111,40 @@ namespace CVSTool.Common
                 }
             }
         }
+
+
+        /// <summary>
+        /// 执行一条计算查询结果语句，返回查询结果（object）。
+        /// </summary>
+        /// <param name="SQLString">计算查询结果语句</param>
+        /// <returns>查询结果（object）</returns>
+        public static object GetSingle(string SQLString)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLString, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+                        object obj = cmd.ExecuteScalar();
+                        if ((Object.Equals(obj, null)) || (Object.Equals(obj, System.DBNull.Value)))
+                        {
+                            return null;
+                        }
+                        else
+                        {
+                            return obj;
+                        }
+                    }
+                    catch (System.Data.SqlClient.SqlException e)
+                    {
+                        connection.Close();
+                        throw e;
+                    }
+                }
+            }
+        }
     }
+
 }
