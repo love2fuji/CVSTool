@@ -10,18 +10,19 @@ namespace CVSTool
     public partial class Main : Form
     {
         static string SqlConnectionString = Config.GetValue("MSSQLConnect");
+        DataTable RegionDT = new DataTable();
 
         public Main()
         {
             InitializeComponent();
         }
 
-        private void btnExport2Excel_Click(object sender, EventArgs e)
+        private void btnBaseDataExport2Excel_Click(object sender, EventArgs e)
         {
 
         }
 
-       
+
 
         private void btnDataExport2Excel_Click(object sender, EventArgs e)
         {
@@ -29,6 +30,56 @@ namespace CVSTool
         }
 
         private void btnImportRegion_Click(object sender, EventArgs e)
+        {
+            if (RegionDT.Rows.Count > 0)
+            {
+                for (int i = 0; i < RegionDT.Rows.Count; i++)
+                {
+                    string BuildID = RegionDT.Rows[i]["建筑编码"].ToString();
+                    string RegionParentID = RegionDT.Rows[i]["上级区域编码"].ToString();
+                    string RegionID = RegionDT.Rows[i]["区域编码"].ToString();
+                    string RegionName = RegionDT.Rows[i]["区域名称"].ToString();
+                    string MeterID = RegionDT.Rows[i]["区域包含仪表代码"].ToString();
+                    string Operator = RegionDT.Rows[i]["运算公式"].ToString();
+                    int Rate = Convert.ToInt32(RegionDT.Rows[i]["百分率"]);
+                    //导入T_ST_Region表
+                    string SQLString = @"IF EXISTS (SELECT 1 FROM T_ST_Region WHERE F_RegionID= '" + RegionID + @" ') 
+                                            UPDATE T_ST_Region SET F_BuildID = '" + BuildID + @"', F_RegionParentID = '" +
+                                            RegionParentID + @"', F_RegionName = '" + RegionName + @"' WHERE F_RegionID = '" + RegionID + @"' 
+                                        ELSE
+                                            INSERT INTO T_ST_Region
+                                            (F_RegionID, F_BuildID, F_RegionParentID, F_RegionName) VALUES
+                                               ( '" + RegionID + @"','" + BuildID + @"','" + RegionParentID + @"','" + RegionName + @"') ";
+
+                    SQLHelper.ExecuteSql(SQLString);
+
+                    //导入T_ST_RegionMeter表
+                    string SQLString2 = @"IF EXISTS (SELECT 1 FROM T_ST_RegionMeter WHERE F_RegionID= '" + RegionID + @" ' AND F_MeterID='" + MeterID + @" ' ) 
+                                            UPDATE T_ST_RegionMeter SET F_Operator = '" + Operator + @"', F_Rate = '" +
+                                            Rate + @"'  WHERE F_RegionID = '" + RegionID + @"' AND F_MeterID='" + MeterID + @"';
+                                        ELSE
+                                            INSERT INTO T_ST_RegionMeter
+                                            (F_RegionID, F_MeterID, F_Operator, F_Rate) VALUES
+                                               ( '" + RegionID + @"','" + MeterID + @"','" + Operator + @"','" + Rate + @"') ";
+
+                    SQLHelper.ExecuteSql(SQLString2);
+                }
+                MessageBox.Show("*** 导入区域数据成功！***");
+            }
+            else
+            {
+                MessageBox.Show("----导入区域数据失败！ ： 区域数据表为空，请确保数据有效！");
+            }
+
+
+
+            
+        }
+
+
+
+
+        private void btnOpenCSV_Click(object sender, EventArgs e)
         {
             /*打开文件选择窗口*/
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -44,63 +95,26 @@ namespace CVSTool
                 string file_name = openFileDialog.SafeFileName;//获取文件名  
                 string file_exc = file_name.Substring(file_name.LastIndexOf("."), file_name.Length - file_name.LastIndexOf(".")); //获取文件扩展名 
 
-                //创建一个空表  
-                DataTable dt = new DataTable();
-                //将数据放到空表中  
-                dt = CSVHelper.OpenCSV(file_path);
+
+                //将数据放到表中  
+                RegionDT = CSVHelper.OpenCSV(file_path);
+
                 //显示导入的数据
-                dgrSendMsgLog.DataSource = dt;
-                CSVToSQLServer(dt);
+                dgvShowRegion.DataSource = RegionDT;
+                tabConServerLog.SelectedTab = tpgRegion;
 
             }
+
         }
 
-        void CSVToSQLServer(DataTable dt)
+        /// <summary>
+        /// 显示区域基础数据行号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvShowRegion_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
-            //创建表 T_ST_RegionInfo
-            string SQLString = @"ALTER TABLE [dbo].[T_ST_RegionInfo] DROP CONSTRAINT [FK_T_ST_Region_T_BD_BuildBaseInfo2]
-                                            IF EXISTS(Select 1 From Sysobjects Where Name='T_ST_RegionInfo')   
-                                                  DROP TABLE T_ST_RegionInfo   
-                                             SET ANSI_NULLS ON
-                                             SET QUOTED_IDENTIFIER ON
-                                             SET ANSI_PADDING ON
-                                            CREATE TABLE [dbo].[T_ST_RegionInfo](
-	                                            [F_BuildID] [varchar](16) NOT NULL,
-	                                            [F_RegionParentID] [varchar](20) NOT NULL,
-	                                            [F_RegionID] [varchar](20) NOT NULL,
-	                                            [F_RegionName] [nvarchar](20) NOT NULL,
-	                                            [F_MeterID] [varchar](20) NOT NULL,
-	                                            [F_MeterName] [varchar](50) NULL,
-	                                            [F_Operator] [varchar](10) NOT NULL,
-	                                            [F_Rate] [decimal](10, 2) NOT NULL
-                                            ) ON [PRIMARY]
-                                             SET ANSI_PADDING OFF
-                                             ALTER TABLE [dbo].[T_ST_RegionInfo]  WITH NOCHECK ADD  CONSTRAINT [FK_T_ST_Region_T_BD_BuildBaseInfo2] FOREIGN KEY([F_BuildID]) 
-                                               REFERENCES [dbo].[T_BD_BuildBaseInfo] ([F_BuildID])
-                                             ALTER TABLE [dbo].[T_ST_RegionInfo] CHECK CONSTRAINT [FK_T_ST_Region_T_BD_BuildBaseInfo2]
-                                            ";
-            string SQLStringRegion = @"DELETE FROM T_ST_RegionMeter
-                                       DELETE FROM T_ST_Region
-                                       INSERT INTO T_ST_Region 
-	                                        SELECT F_RegionID, MAX(F_BuildID) AS F_BuildID
-			                                       ,MAX( F_RegionParentID) AS F_RegionParentID
-			                                       ,MAX( F_RegionName) AS F_RegionName
-	                                          FROM T_ST_RegionInfo 
-	                                          GROUP BY F_RegionID";
-
-            string SQLStringRegionMeter = @"INSERT INTO T_ST_RegionMeter
-	                                        SELECT F_RegionID, F_MeterID, F_Operator, F_Rate
-	                                        FROM T_ST_RegionInfo ";
-
-            //创建表 T_ST_RegionInfo
-            SQLHelper.ExecuteSql(SQLString);
-            //将数据插入RegionInfo表
-            SQLHelper.DataTableToSQLServer(dt);
-            //将数据插入Region表
-            SQLHelper.ExecuteSql(SQLStringRegion);
-            //将数据插入RegionMeter表
-            SQLHelper.ExecuteSql(SQLStringRegionMeter);
-
+            e.Row.HeaderCell.Value = string.Format("{0}", e.Row.Index + 1);
         }
     }
 }
