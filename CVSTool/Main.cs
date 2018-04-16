@@ -84,7 +84,32 @@ namespace CVSTool
 
         }
 
+        /// <summary>
+        /// 导入部门基础数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnImportDepart_Click(object sender, EventArgs e)
+        {
+             try
+            {
+                if (0 == DepartmentServer.ImportDepartment(RegionDT))
+                {
+                    ShowLog("*** 导入部门数据成功！***");
+                    MessageBox.Show("*** 导入部门数据成功！***");
+                }
+                else {
+                    ShowLog("Error: 导入部门数据失败！: 部门数据表为空，请确保数据有效！");
+                    MessageBox.Show("Error: 导入部门数据失败！: 部门数据表为空，请确保数据有效！");
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowLog("Error: 导入部门数据失败！" + ex.Message);
+                MessageBox.Show("Error: 导入部门数据失败！" + ex.Message);
+            }
 
+        }
 
 
         private void btnOpenCSV_Click(object sender, EventArgs e)
@@ -143,7 +168,7 @@ namespace CVSTool
         /// <summary>
         /// 检查导入表格的列名是否正确
         /// </summary>
-        /// <param name="columnName"></param>
+        /// <param name="columnName">列名</param>
         /// <returns>
         ///     0：列名正确
         ///     1：列名错误，列名不存在
@@ -184,5 +209,7 @@ namespace CVSTool
         {
             e.Row.HeaderCell.Value = string.Format("{0}", e.Row.Index + 1);
         }
+
+        
     }
 }

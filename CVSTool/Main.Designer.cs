@@ -116,7 +116,7 @@
             this.tpgRegion.Padding = new System.Windows.Forms.Padding(3);
             this.tpgRegion.Size = new System.Drawing.Size(1160, 487);
             this.tpgRegion.TabIndex = 1;
-            this.tpgRegion.Text = "区域基础数据";
+            this.tpgRegion.Text = "区域/部门基础数据";
             this.tpgRegion.UseVisualStyleBackColor = true;
             // 
             // dgvShowRegion
@@ -143,7 +143,7 @@
             this.tpgDepart.Padding = new System.Windows.Forms.Padding(3);
             this.tpgDepart.Size = new System.Drawing.Size(1160, 487);
             this.tpgDepart.TabIndex = 2;
-            this.tpgDepart.Text = "部门基础数据";
+            this.tpgDepart.Text = " ";
             this.tpgDepart.UseVisualStyleBackColor = true;
             // 
             // dgvShowDepart
@@ -239,6 +239,7 @@
             this.btnImportDepart.TabIndex = 16;
             this.btnImportDepart.Text = "导入部门基础数据";
             this.btnImportDepart.UseVisualStyleBackColor = false;
+            this.btnImportDepart.Click += new System.EventHandler(this.btnImportDepart_Click);
             // 
             // 退出ToolStripMenuItem
             // 
