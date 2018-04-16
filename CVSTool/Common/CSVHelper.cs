@@ -55,7 +55,7 @@ namespace CVSTool.Common
             }
             if (aryLine != null && aryLine.Length > 0)
             {
-                dt.DefaultView.Sort = tableHead[0] + " " + "asc";
+                //dt.DefaultView.Sort = tableHead[0] + " " + " asc";
             }
 
             sr.Close();

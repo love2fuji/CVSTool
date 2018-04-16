@@ -33,7 +33,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabConServerLog = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.StatusSMS = new System.Windows.Forms.RichTextBox();
+            this.ServerLog = new System.Windows.Forms.RichTextBox();
             this.tpgRegion = new System.Windows.Forms.TabPage();
             this.dgvShowRegion = new System.Windows.Forms.DataGridView();
             this.tpgDepart = new System.Windows.Forms.TabPage();
@@ -89,23 +89,23 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.StatusSMS);
+            this.tabPage1.Controls.Add(this.ServerLog);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(1160, 487);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "服务日志";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // StatusSMS
+            // ServerLog
             // 
-            this.StatusSMS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.StatusSMS.Location = new System.Drawing.Point(3, 3);
-            this.StatusSMS.Name = "StatusSMS";
-            this.StatusSMS.Size = new System.Drawing.Size(1154, 481);
-            this.StatusSMS.TabIndex = 24;
-            this.StatusSMS.Text = "";
+            this.ServerLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ServerLog.Location = new System.Drawing.Point(3, 3);
+            this.ServerLog.Name = "ServerLog";
+            this.ServerLog.Size = new System.Drawing.Size(1154, 481);
+            this.ServerLog.TabIndex = 24;
+            this.ServerLog.Text = "";
             // 
             // tpgRegion
             // 
@@ -113,7 +113,7 @@
             this.tpgRegion.Controls.Add(this.dgvShowRegion);
             this.tpgRegion.Location = new System.Drawing.Point(4, 22);
             this.tpgRegion.Name = "tpgRegion";
-            this.tpgRegion.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tpgRegion.Padding = new System.Windows.Forms.Padding(3);
             this.tpgRegion.Size = new System.Drawing.Size(1160, 487);
             this.tpgRegion.TabIndex = 1;
             this.tpgRegion.Text = "区域基础数据";
@@ -140,7 +140,7 @@
             this.tpgDepart.Controls.Add(this.dgvShowDepart);
             this.tpgDepart.Location = new System.Drawing.Point(4, 22);
             this.tpgDepart.Name = "tpgDepart";
-            this.tpgDepart.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tpgDepart.Padding = new System.Windows.Forms.Padding(3);
             this.tpgDepart.Size = new System.Drawing.Size(1160, 487);
             this.tpgDepart.TabIndex = 2;
             this.tpgDepart.Text = "部门基础数据";
@@ -243,13 +243,13 @@
             // 退出ToolStripMenuItem
             // 
             this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
-            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.退出ToolStripMenuItem.Text = "退出";
             // 
             // 设置SToolStripMenuItem
             // 
             this.设置SToolStripMenuItem.Name = "设置SToolStripMenuItem";
-            this.设置SToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.设置SToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.设置SToolStripMenuItem.Text = "系统设置";
             // 
             // toolStripMenuItem1
@@ -295,7 +295,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Main";
             this.Text = "Form1";
             this.groupBox2.ResumeLayout(false);
@@ -319,7 +319,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TabControl tabConServerLog;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.RichTextBox StatusSMS;
+        private System.Windows.Forms.RichTextBox ServerLog;
         private System.Windows.Forms.TabPage tpgRegion;
         public System.Windows.Forms.DataGridView dgvShowRegion;
         private System.Windows.Forms.TabPage tpgDepart;
