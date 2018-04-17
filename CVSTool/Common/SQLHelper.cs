@@ -18,6 +18,18 @@ namespace CVSTool.Common
         }
 
 
+        public static DataTable GetDataTable(string sql)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlDataAdapter sda = new SqlDataAdapter(sql, conn);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+
+                return dt;
+            }
+        }
+
         /// <summary>
         /// 表是否存在
         /// </summary>

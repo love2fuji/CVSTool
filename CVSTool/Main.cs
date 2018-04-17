@@ -4,6 +4,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace CVSTool
@@ -12,7 +13,7 @@ namespace CVSTool
     {
         static string SqlConnectionString = Config.GetValue("MSSQLConnect");
         DataTable RegionDT = new DataTable();
-        
+
         public Main()
         {
             InitializeComponent();
@@ -47,6 +48,36 @@ namespace CVSTool
 
         private void btnBaseDataExport2Excel_Click(object sender, EventArgs e)
         {
+            try
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                //打开的文件选择对话框上的标题
+                saveFileDialog.Title = "请选择文件";
+                //设置文件类型
+                saveFileDialog.Filter = "文本文件(*.csv)|*.csv|所有文件(*.*)|*.*";
+                //设置默认文件类型显示顺序
+                saveFileDialog.FilterIndex = 1;
+                //保存对话框是否记忆上次打开的目录
+                saveFileDialog.RestoreDirectory = true;
+                //设置是否允许多选
+                //saveFileDialog.Multiselect = false;
+                //按下确定选择的按钮
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //获得文件路径
+                    string localFilePath = saveFileDialog.FileName.ToString();
+                    //获取文件路径，不带文件名
+                    //FilePath = localFilePath.Substring(0, localFilePath.LastIndexOf("\\"));
+
+                    CSVHelper.SaveToCSV(ExportServer.ExportBaseData(), localFilePath);
+                    MessageBox.Show("*** 导出数据成功！***", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowLog("Error: 导出数据失败！" + ex.Message);
+                MessageBox.Show("Error:  导出数据失败！" + ex.Message);
+            }
 
         }
 
@@ -71,7 +102,8 @@ namespace CVSTool
                     ShowLog("*** 导入区域数据成功！***");
                     MessageBox.Show("*** 导入区域数据成功！***");
                 }
-                else {
+                else
+                {
                     ShowLog("Error: 导入区域数据失败！: 区域数据表为空，请确保数据有效！");
                     MessageBox.Show("Error: 导入区域数据失败！: 区域数据表为空，请确保数据有效！");
                 }
@@ -91,14 +123,15 @@ namespace CVSTool
         /// <param name="e"></param>
         private void btnImportDepart_Click(object sender, EventArgs e)
         {
-             try
+            try
             {
                 if (0 == DepartmentServer.ImportDepartment(RegionDT))
                 {
                     ShowLog("*** 导入部门数据成功！***");
                     MessageBox.Show("*** 导入部门数据成功！***");
                 }
-                else {
+                else
+                {
                     ShowLog("Error: 导入部门数据失败！: 部门数据表为空，请确保数据有效！");
                     MessageBox.Show("Error: 导入部门数据失败！: 部门数据表为空，请确保数据有效！");
                 }
@@ -119,7 +152,7 @@ namespace CVSTool
                 /*打开文件选择窗口*/
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.InitialDirectory = "c://";
-                openFileDialog.Filter = "文本文件|*.*|C#文件|*.cs|所有文件|*.*";
+                openFileDialog.Filter = "文本文件|*.csv|C#文件|*.cs|所有文件|*.*";
                 openFileDialog.RestoreDirectory = true;
                 openFileDialog.FilterIndex = 1;
                 /**/
@@ -146,7 +179,7 @@ namespace CVSTool
                         else
                         {
                             ShowLog("列名：" + item.ColumnName + " -> 错误，请输入正确的列名称");
-                            MessageBox.Show("列名：" + item.ColumnName + " -> 错误，请输入正确的列名称","错误信息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("列名：" + item.ColumnName + " -> 错误，请输入正确的列名称", "错误信息", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
 
@@ -160,7 +193,7 @@ namespace CVSTool
             catch (Exception ex)
             {
                 ShowLog("Error: 打开文件失败！" + ex.Message);
-                MessageBox.Show("Error: 打开文件失败！" + ex.Message , "错误信息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: 打开文件失败！" + ex.Message, "错误信息", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
         }
@@ -198,7 +231,7 @@ namespace CVSTool
                     return 1;
             }
             return 0;
-        } 
+        }
 
         /// <summary>
         /// 显示区域基础数据行号
@@ -210,6 +243,6 @@ namespace CVSTool
             e.Row.HeaderCell.Value = string.Format("{0}", e.Row.Index + 1);
         }
 
-        
+
     }
 }
