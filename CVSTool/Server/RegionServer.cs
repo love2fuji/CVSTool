@@ -18,10 +18,10 @@ namespace CVSTool.Server
                 for (int i = 0; i < RegionDT.Rows.Count; i++)
                 {
                     string BuildID = RegionDT.Rows[i]["建筑编码"].ToString();
-                    string RegionParentID = RegionDT.Rows[i]["上级区域编码"].ToString();
-                    string RegionID = RegionDT.Rows[i]["区域编码"].ToString();
-                    string RegionName = RegionDT.Rows[i]["区域名称"].ToString();
-                    string MeterID = RegionDT.Rows[i]["区域包含仪表代码"].ToString();
+                    string RegionParentID = RegionDT.Rows[i]["上级区域(部门)编码"].ToString();
+                    string RegionID = RegionDT.Rows[i]["区域(部门)编码"].ToString();
+                    string RegionName = RegionDT.Rows[i]["区域(部门)名称"].ToString();
+                    string MeterID = RegionDT.Rows[i]["区域(部门)包含仪表代码"].ToString();
                     string Operator = RegionDT.Rows[i]["运算公式"].ToString();
                     int Rate = Convert.ToInt32(RegionDT.Rows[i]["百分率"]);
                     //导入T_ST_Region表

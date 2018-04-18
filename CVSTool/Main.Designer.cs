@@ -43,7 +43,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.退出ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.btnDataExport2Excel = new System.Windows.Forms.Button();
+            this.btnRegionDataExport2CSV = new System.Windows.Forms.Button();
             this.btnImportRegion = new System.Windows.Forms.Button();
             this.btnOpenCSV = new System.Windows.Forms.Button();
             this.btnImportDepart = new System.Windows.Forms.Button();
@@ -162,13 +162,13 @@
             // btnBaseDataExport2Excel
             // 
             this.btnBaseDataExport2Excel.BackColor = System.Drawing.SystemColors.Control;
-            this.btnBaseDataExport2Excel.Location = new System.Drawing.Point(32, 20);
+            this.btnBaseDataExport2Excel.Location = new System.Drawing.Point(149, 20);
             this.btnBaseDataExport2Excel.Name = "btnBaseDataExport2Excel";
-            this.btnBaseDataExport2Excel.Size = new System.Drawing.Size(90, 41);
+            this.btnBaseDataExport2Excel.Size = new System.Drawing.Size(81, 41);
             this.btnBaseDataExport2Excel.TabIndex = 19;
-            this.btnBaseDataExport2Excel.Text = "导出基础数据";
+            this.btnBaseDataExport2Excel.Text = "导出原部门基础数据";
             this.btnBaseDataExport2Excel.UseVisualStyleBackColor = false;
-            this.btnBaseDataExport2Excel.Click += new System.EventHandler(this.btnBaseDataExport2Excel_Click);
+            this.btnBaseDataExport2Excel.Click += new System.EventHandler(this.btnDepartmentDataExport2CSV_Click);
             // 
             // 显示ToolStripMenuItem1
             // 
@@ -198,16 +198,16 @@
             this.notifyIcon1.Text = "短信服务";
             this.notifyIcon1.Visible = true;
             // 
-            // btnDataExport2Excel
+            // btnRegionDataExport2CSV
             // 
-            this.btnDataExport2Excel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnDataExport2Excel.Location = new System.Drawing.Point(143, 20);
-            this.btnDataExport2Excel.Name = "btnDataExport2Excel";
-            this.btnDataExport2Excel.Size = new System.Drawing.Size(88, 41);
-            this.btnDataExport2Excel.TabIndex = 17;
-            this.btnDataExport2Excel.Text = "导出原来配置";
-            this.btnDataExport2Excel.UseVisualStyleBackColor = false;
-            this.btnDataExport2Excel.Click += new System.EventHandler(this.btnDataExport2Excel_Click);
+            this.btnRegionDataExport2CSV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnRegionDataExport2CSV.Location = new System.Drawing.Point(42, 20);
+            this.btnRegionDataExport2CSV.Name = "btnRegionDataExport2CSV";
+            this.btnRegionDataExport2CSV.Size = new System.Drawing.Size(82, 41);
+            this.btnRegionDataExport2CSV.TabIndex = 17;
+            this.btnRegionDataExport2CSV.Text = "导出原区域基础数据";
+            this.btnRegionDataExport2CSV.UseVisualStyleBackColor = false;
+            this.btnRegionDataExport2CSV.Click += new System.EventHandler(this.btnRegionDataExport2CSV_Click);
             // 
             // btnImportRegion
             // 
@@ -265,7 +265,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.btnBaseDataExport2Excel);
-            this.groupBox1.Controls.Add(this.btnDataExport2Excel);
+            this.groupBox1.Controls.Add(this.btnRegionDataExport2CSV);
             this.groupBox1.Controls.Add(this.btnImportRegion);
             this.groupBox1.Controls.Add(this.btnOpenCSV);
             this.groupBox1.Controls.Add(this.btnImportDepart);
@@ -330,7 +330,7 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 退出ToolStripMenuItem1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
-        private System.Windows.Forms.Button btnDataExport2Excel;
+        private System.Windows.Forms.Button btnRegionDataExport2CSV;
         private System.Windows.Forms.Button btnImportRegion;
         private System.Windows.Forms.Button btnOpenCSV;
         private System.Windows.Forms.Button btnImportDepart;
