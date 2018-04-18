@@ -54,6 +54,19 @@ namespace CVSTool.Server
 
         }
 
+        public static int CheckData(string BuildID, string MeterID)
+        {
+            string SQLString = @" SELECT ISNULL((SELECT TOP(1) 1 
+                                    FROM T_ST_MeterUseInfo 
+                                    WHERE F_BuildID='" + BuildID + @"' AND F_MeterID='" + MeterID + @"' ), 0)  ";
+
+            object rows= SQLHelper.GetSingle(SQLString);
+            int str= Convert.ToInt16(rows);
+
+            return str;
+
+        }
+
 
     }
 }

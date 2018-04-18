@@ -23,7 +23,7 @@ namespace CVSTool.Server
                     string RegionName = RegionDT.Rows[i]["区域(部门)名称"].ToString();
                     string MeterID = RegionDT.Rows[i]["区域(部门)包含仪表代码"].ToString();
                     string Operator = RegionDT.Rows[i]["运算公式"].ToString();
-                    int Rate = Convert.ToInt32(RegionDT.Rows[i]["百分率"]);
+                    string Rate = RegionDT.Rows[i]["百分率"].ToString();
                     //导入T_ST_Region表
                     string SQLString = @"IF EXISTS (SELECT 1 FROM T_ST_Region WHERE F_RegionID= '" + RegionID + @" ') 
                                             UPDATE T_ST_Region SET F_BuildID = '" + BuildID + @"', F_RegionParentID = '" +
@@ -42,7 +42,7 @@ namespace CVSTool.Server
                                         ELSE
                                             INSERT INTO T_ST_RegionMeter
                                             (F_RegionID, F_MeterID, F_Operator, F_Rate) VALUES
-                                               ( '" + RegionID + @"','" + MeterID + @"','" + Operator + @"','" + Rate + @"') ";
+                                               ( '" + RegionID + @"','" + MeterID + @"','" + Operator + @"'," + Rate + @") ";
 
                     SQLHelper.ExecuteSql(SQLString2);
                 }

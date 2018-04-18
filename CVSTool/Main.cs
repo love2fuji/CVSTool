@@ -202,7 +202,6 @@ namespace CVSTool
 
                     foreach (DataColumn item in RegionDT.Columns)
                     {
-                        //columnName = item.ColumnName;
                         if (0 == CheckColumnName(item.ColumnName))
                         {
                             ShowLog("列名：" + item.ColumnName + " -> OK");
@@ -213,19 +212,42 @@ namespace CVSTool
                             MessageBox.Show("列名：" + item.ColumnName + " -> 错误，请输入正确的列名称", "错误信息", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-
                     }
 
-                    //显示导入的数据
+                    //显示导入CSV文件的数据
                     dgvShowRegion.DataSource = RegionDT;
                     tabConServerLog.SelectedTab = tpgRegion;
+
+                    //检查建筑编码，仪表代码数据是否正确
+                    if (RegionDT.Rows.Count > 0) {
+                        ShowLog("开始检查 基础数据...");
+                        for (int i = 0; i <= RegionDT.Rows.Count-1; i++)
+                        {
+                            string BuildID = RegionDT.Rows[i]["建筑编码"].ToString();
+                            string MeterID = RegionDT.Rows[i]["区域(部门)包含仪表代码"].ToString();
+                            if (ExportServer.CheckData(BuildID, MeterID)== 0)
+                            {
+                                //数据有误，禁止导入
+                                btnImportRegion.Enabled = false;
+                                btnImportDepart.Enabled = false;
+                                int row = i + 1;
+                                ShowLog("第"+ row + "行建筑编码：" + BuildID + "或 仪表编码："+ MeterID + " 不存在，请输入正确的建筑编码和仪表编码");
+                                MessageBox.Show("第" + row + "行建筑编码：" + BuildID + "或 仪表编码：" + MeterID + " 不存在，请输入正确的建筑编码和仪表编码", "错误信息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+                        //数据正确，可以导入
+                        btnImportRegion.Enabled = true;
+                        btnImportDepart.Enabled = true;
+                        ShowLog("检查基础数据完成，数据正确");
+
+                    }
                 }
             }
             catch (Exception ex)
             {
                 ShowLog("Error: 打开文件失败！" + ex.Message);
                 MessageBox.Show("Error: 打开文件失败！" + ex.Message, "错误信息", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
             }
         }
 
@@ -274,6 +296,11 @@ namespace CVSTool
             e.Row.HeaderCell.Value = string.Format("{0}", e.Row.Index + 1);
         }
 
-        
+        private void Main_Load(object sender, EventArgs e)
+        {
+            //禁止导入
+            btnImportRegion.Enabled = false;
+            btnImportDepart.Enabled = false;
+        }
     }
 }
