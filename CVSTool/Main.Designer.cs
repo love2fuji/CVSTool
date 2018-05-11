@@ -51,6 +51,9 @@
             this.设置SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cboxBiuldInfo = new System.Windows.Forms.ComboBox();
+            this.btnBaseDataExport = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.groupBox2.SuspendLayout();
             this.tabConServerLog.SuspendLayout();
@@ -162,7 +165,7 @@
             // btnBaseDataExport2Excel
             // 
             this.btnBaseDataExport2Excel.BackColor = System.Drawing.SystemColors.Control;
-            this.btnBaseDataExport2Excel.Location = new System.Drawing.Point(149, 20);
+            this.btnBaseDataExport2Excel.Location = new System.Drawing.Point(509, 18);
             this.btnBaseDataExport2Excel.Name = "btnBaseDataExport2Excel";
             this.btnBaseDataExport2Excel.Size = new System.Drawing.Size(81, 41);
             this.btnBaseDataExport2Excel.TabIndex = 19;
@@ -201,7 +204,7 @@
             // btnRegionDataExport2CSV
             // 
             this.btnRegionDataExport2CSV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnRegionDataExport2CSV.Location = new System.Drawing.Point(42, 20);
+            this.btnRegionDataExport2CSV.Location = new System.Drawing.Point(406, 18);
             this.btnRegionDataExport2CSV.Name = "btnRegionDataExport2CSV";
             this.btnRegionDataExport2CSV.Size = new System.Drawing.Size(82, 41);
             this.btnRegionDataExport2CSV.TabIndex = 17;
@@ -212,7 +215,7 @@
             // btnImportRegion
             // 
             this.btnImportRegion.BackColor = System.Drawing.SystemColors.Info;
-            this.btnImportRegion.Location = new System.Drawing.Point(484, 20);
+            this.btnImportRegion.Location = new System.Drawing.Point(804, 20);
             this.btnImportRegion.Name = "btnImportRegion";
             this.btnImportRegion.Size = new System.Drawing.Size(113, 41);
             this.btnImportRegion.TabIndex = 16;
@@ -222,7 +225,7 @@
             // 
             // btnOpenCSV
             // 
-            this.btnOpenCSV.Location = new System.Drawing.Point(325, 20);
+            this.btnOpenCSV.Location = new System.Drawing.Point(664, 20);
             this.btnOpenCSV.Name = "btnOpenCSV";
             this.btnOpenCSV.Size = new System.Drawing.Size(109, 41);
             this.btnOpenCSV.TabIndex = 16;
@@ -233,7 +236,7 @@
             // btnImportDepart
             // 
             this.btnImportDepart.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.btnImportDepart.Location = new System.Drawing.Point(637, 20);
+            this.btnImportDepart.Location = new System.Drawing.Point(952, 20);
             this.btnImportDepart.Name = "btnImportDepart";
             this.btnImportDepart.Size = new System.Drawing.Size(113, 41);
             this.btnImportDepart.TabIndex = 16;
@@ -264,7 +267,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.cboxBiuldInfo);
             this.groupBox1.Controls.Add(this.btnBaseDataExport2Excel);
+            this.groupBox1.Controls.Add(this.btnBaseDataExport);
             this.groupBox1.Controls.Add(this.btnRegionDataExport2CSV);
             this.groupBox1.Controls.Add(this.btnImportRegion);
             this.groupBox1.Controls.Add(this.btnOpenCSV);
@@ -276,6 +282,35 @@
             this.groupBox1.TabIndex = 32;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "选项";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(61, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 12);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "选择建筑物";
+            // 
+            // cboxBiuldInfo
+            // 
+            this.cboxBiuldInfo.FormattingEnabled = true;
+            this.cboxBiuldInfo.Location = new System.Drawing.Point(29, 39);
+            this.cboxBiuldInfo.Name = "cboxBiuldInfo";
+            this.cboxBiuldInfo.Size = new System.Drawing.Size(165, 20);
+            this.cboxBiuldInfo.TabIndex = 20;
+            this.cboxBiuldInfo.SelectedIndexChanged += new System.EventHandler(this.cboxBiuldInfo_SelectedIndexChanged);
+            // 
+            // btnBaseDataExport
+            // 
+            this.btnBaseDataExport.BackColor = System.Drawing.Color.Silver;
+            this.btnBaseDataExport.Location = new System.Drawing.Point(227, 20);
+            this.btnBaseDataExport.Name = "btnBaseDataExport";
+            this.btnBaseDataExport.Size = new System.Drawing.Size(85, 41);
+            this.btnBaseDataExport.TabIndex = 17;
+            this.btnBaseDataExport.Text = "导出基础数据";
+            this.btnBaseDataExport.UseVisualStyleBackColor = false;
+            this.btnBaseDataExport.Click += new System.EventHandler(this.btnBaseDataExport_Click);
             // 
             // menuStrip1
             // 
@@ -296,9 +331,10 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Main";
-            this.Text = "Form1";
+            this.Text = "区域部门基础信息导入工具";
             this.Load += new System.EventHandler(this.Main_Load);
             this.groupBox2.ResumeLayout(false);
             this.tabConServerLog.ResumeLayout(false);
@@ -309,6 +345,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvShowDepart)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -340,6 +377,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cboxBiuldInfo;
+        private System.Windows.Forms.Button btnBaseDataExport;
     }
 }
 
