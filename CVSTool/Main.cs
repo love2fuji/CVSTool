@@ -380,5 +380,44 @@ namespace CVSTool
 
             ShowLog("选择要导出的建筑物为：" + buildName +"  建筑代码："+ buildID);
         }
+
+        private void btnEnergyDataExport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string buildName = cboxBiuldInfo.GetItemText(cboxBiuldInfo.Items[cboxBiuldInfo.SelectedIndex]);
+                string buildID = cboxBiuldInfo.GetItemText(cboxBiuldInfo.SelectedValue);
+                ShowLog("选择要导出的建筑物为：" + buildName + "  建筑代码：" + buildID);
+
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                //打开的文件选择对话框上的标题
+                saveFileDialog.Title = "请选择文件";
+                //设置文件类型
+                saveFileDialog.Filter = "文本文件(*.csv)|*.csv|所有文件(*.*)|*.*";
+                //设置默认文件类型显示顺序
+                saveFileDialog.FilterIndex = 1;
+                //保存对话框是否记忆上次打开的目录
+                saveFileDialog.RestoreDirectory = true;
+                //设置是否允许多选
+                //saveFileDialog.Multiselect = false;
+                //按下确定选择的按钮
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //获得文件路径
+                    string localFilePath = saveFileDialog.FileName.ToString();
+                    //获取文件路径，不带文件名
+                    //FilePath = localFilePath.Substring(0, localFilePath.LastIndexOf("\\"));
+
+                    CSVHelper.SaveToCSV(ExportServer.ExportEnergyData(buildID), localFilePath);
+                    ShowLog("*** 导出能耗基础数据成功！***");
+                    MessageBox.Show("*** 导出能耗基础数据成功！***", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowLog("Error: 导出能耗基础数据失败！" + ex.Message);
+                MessageBox.Show("Error:  导出能耗基础数据失败！" + ex.Message);
+            }
+        }
     }
 }

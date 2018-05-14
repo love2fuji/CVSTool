@@ -90,6 +90,29 @@ namespace CVSTool.Server
 
         }
 
+        public static DataTable ExportEnergyData(string buildID)
+        {
+            string SQLString = @"SELECT	T_ST_CircuitMeterInfo.F_BuildID AS '建筑代码',F_CircuitID AS '本级支路代码'
+		                                ,F_ParentID AS '上级支路代码',F_CircuitName AS '支路名称'
+		                                ,CASE WHEN F_MainCircuit='TRUE' THEN 1 ELSE 0 END  AS '主回路',T_ST_CircuitMeterInfo.F_MeterID AS '仪表代码'
+		                                ,F_CircuitName AS '仪表名称',F_MeterCode AS '仪表代号'
+		                                ,F_MeterAddr1 AS '仪表地址',F_MeterProdName AS '监测仪表产品名称'
+		                                ,F_MeterModel AS '仪表型号',F_MeterType AS '仪表类型'
+		                                ,T_ST_CircuitMeterInfo.F_EnergyItemCode AS '仪表测量的分类能耗'
+		                                ,NULL AS '分项能耗',F_CollectionName AS '采集器名称',NULL AS '实时曲线点位'				
+                                  FROM T_ST_CircuitMeterInfo
+                                  INNER JOIN T_ST_MeterUseInfo ON T_ST_MeterUseInfo.F_MeterID = T_ST_CircuitMeterInfo.F_MeterID
+                                  INNER JOIN T_ST_MeterProdInfo ON T_ST_MeterProdInfo.F_MeterProdID = T_ST_MeterUseInfo.F_MeterProdID
+                                  INNER JOIN T_ST_DataCollectionInfo ON T_ST_DataCollectionInfo.F_CollectionID = T_ST_MeterUseInfo.F_CollectionID 
+                                  WHERE T_ST_CircuitMeterInfo.F_BuildID = '" + buildID + @"'";
+
+            DataTable DT = new DataTable();
+            DT = SQLHelper.GetDataTable(SQLString);
+
+            return DT;
+
+        }
+
 
         public static DataTable GetBuildInfo()
         {
