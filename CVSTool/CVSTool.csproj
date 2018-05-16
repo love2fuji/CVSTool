@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>CVSTool</RootNamespace>
     <AssemblyName>EMSTool</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -131,9 +131,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Common\RegionSQL.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Configure.ico" />
     <Content Include="Image\Configure.ico" />
     <Content Include="Image\Configure.png" />
