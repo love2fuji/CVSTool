@@ -90,6 +90,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\DepartmentServer.cs" />
+    <Compile Include="Server\EnergyItemServer.cs" />
     <Compile Include="Server\ExportServer.cs" />
     <Compile Include="Server\RegionServer.cs" />
     <EmbeddedResource Include="Main.resx">

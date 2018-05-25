@@ -53,9 +53,10 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cboxBiuldInfo = new System.Windows.Forms.ComboBox();
+            this.btnEnergyDataExport = new System.Windows.Forms.Button();
             this.btnBaseDataExport = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.btnEnergyDataExport = new System.Windows.Forms.Button();
+            this.btnEnergyItemImport = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.tabConServerLog.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -165,7 +166,7 @@
             // 
             // btnBaseDataExport2Excel
             // 
-            this.btnBaseDataExport2Excel.BackColor = System.Drawing.SystemColors.Control;
+            this.btnBaseDataExport2Excel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnBaseDataExport2Excel.Location = new System.Drawing.Point(529, 20);
             this.btnBaseDataExport2Excel.Name = "btnBaseDataExport2Excel";
             this.btnBaseDataExport2Excel.Size = new System.Drawing.Size(81, 41);
@@ -204,7 +205,7 @@
             // 
             // btnRegionDataExport2CSV
             // 
-            this.btnRegionDataExport2CSV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnRegionDataExport2CSV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnRegionDataExport2CSV.Location = new System.Drawing.Point(430, 20);
             this.btnRegionDataExport2CSV.Name = "btnRegionDataExport2CSV";
             this.btnRegionDataExport2CSV.Size = new System.Drawing.Size(82, 41);
@@ -218,7 +219,7 @@
             this.btnImportRegion.BackColor = System.Drawing.SystemColors.Info;
             this.btnImportRegion.Location = new System.Drawing.Point(804, 20);
             this.btnImportRegion.Name = "btnImportRegion";
-            this.btnImportRegion.Size = new System.Drawing.Size(113, 41);
+            this.btnImportRegion.Size = new System.Drawing.Size(71, 41);
             this.btnImportRegion.TabIndex = 16;
             this.btnImportRegion.Text = "导入区域基础数据";
             this.btnImportRegion.UseVisualStyleBackColor = false;
@@ -237,9 +238,9 @@
             // btnImportDepart
             // 
             this.btnImportDepart.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.btnImportDepart.Location = new System.Drawing.Point(952, 20);
+            this.btnImportDepart.Location = new System.Drawing.Point(900, 20);
             this.btnImportDepart.Name = "btnImportDepart";
-            this.btnImportDepart.Size = new System.Drawing.Size(113, 41);
+            this.btnImportDepart.Size = new System.Drawing.Size(70, 41);
             this.btnImportDepart.TabIndex = 16;
             this.btnImportDepart.Text = "导入部门基础数据";
             this.btnImportDepart.UseVisualStyleBackColor = false;
@@ -273,6 +274,7 @@
             this.groupBox1.Controls.Add(this.btnBaseDataExport2Excel);
             this.groupBox1.Controls.Add(this.btnEnergyDataExport);
             this.groupBox1.Controls.Add(this.btnBaseDataExport);
+            this.groupBox1.Controls.Add(this.btnEnergyItemImport);
             this.groupBox1.Controls.Add(this.btnRegionDataExport2CSV);
             this.groupBox1.Controls.Add(this.btnImportRegion);
             this.groupBox1.Controls.Add(this.btnOpenCSV);
@@ -303,6 +305,17 @@
             this.cboxBiuldInfo.TabIndex = 20;
             this.cboxBiuldInfo.SelectedIndexChanged += new System.EventHandler(this.cboxBiuldInfo_SelectedIndexChanged);
             // 
+            // btnEnergyDataExport
+            // 
+            this.btnEnergyDataExport.BackColor = System.Drawing.Color.Silver;
+            this.btnEnergyDataExport.Location = new System.Drawing.Point(247, 18);
+            this.btnEnergyDataExport.Name = "btnEnergyDataExport";
+            this.btnEnergyDataExport.Size = new System.Drawing.Size(71, 41);
+            this.btnEnergyDataExport.TabIndex = 17;
+            this.btnEnergyDataExport.Text = "导出能耗基础数据";
+            this.btnEnergyDataExport.UseVisualStyleBackColor = false;
+            this.btnEnergyDataExport.Click += new System.EventHandler(this.btnEnergyDataExport_Click);
+            // 
             // btnBaseDataExport
             // 
             this.btnBaseDataExport.BackColor = System.Drawing.Color.Silver;
@@ -325,16 +338,16 @@
             this.menuStrip1.TabIndex = 31;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // btnEnergyDataExport
+            // btnEnergyItemImport
             // 
-            this.btnEnergyDataExport.BackColor = System.Drawing.Color.Silver;
-            this.btnEnergyDataExport.Location = new System.Drawing.Point(247, 18);
-            this.btnEnergyDataExport.Name = "btnEnergyDataExport";
-            this.btnEnergyDataExport.Size = new System.Drawing.Size(71, 41);
-            this.btnEnergyDataExport.TabIndex = 17;
-            this.btnEnergyDataExport.Text = "导出能耗基础数据";
-            this.btnEnergyDataExport.UseVisualStyleBackColor = false;
-            this.btnEnergyDataExport.Click += new System.EventHandler(this.btnEnergyDataExport_Click);
+            this.btnEnergyItemImport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnEnergyItemImport.Location = new System.Drawing.Point(994, 20);
+            this.btnEnergyItemImport.Name = "btnEnergyItemImport";
+            this.btnEnergyItemImport.Size = new System.Drawing.Size(67, 41);
+            this.btnEnergyItemImport.TabIndex = 17;
+            this.btnEnergyItemImport.Text = "导入分项基础数据";
+            this.btnEnergyItemImport.UseVisualStyleBackColor = false;
+            this.btnEnergyItemImport.Click += new System.EventHandler(this.btnEnergyItemImport_Click);
             // 
             // Main
             // 
@@ -394,6 +407,7 @@
         private System.Windows.Forms.ComboBox cboxBiuldInfo;
         private System.Windows.Forms.Button btnBaseDataExport;
         private System.Windows.Forms.Button btnEnergyDataExport;
+        private System.Windows.Forms.Button btnEnergyItemImport;
     }
 }
 

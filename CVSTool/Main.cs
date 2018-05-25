@@ -187,7 +187,11 @@ namespace CVSTool
 
         }
 
-
+        /// <summary>
+        /// 打开CSV文件，并检查是否正确
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnOpenCSV_Click(object sender, EventArgs e)
         {
             try
@@ -230,27 +234,34 @@ namespace CVSTool
                     dgvShowRegion.DataSource = RegionDT;
                     tabConServerLog.SelectedTab = tpgRegion;
 
+
                     //检查建筑编码，仪表代码数据是否正确
-                    if (RegionDT.Rows.Count > 0) {
+                    if (RegionDT.Rows.Count > 0)
+                    {
                         ShowLog("开始检查 基础数据...");
-                        for (int i = 0; i <= RegionDT.Rows.Count-1; i++)
+                        for (int i = 0; i <= RegionDT.Rows.Count - 1; i++)
                         {
                             string BuildID = RegionDT.Rows[i]["建筑编码"].ToString();
-                            string MeterID = RegionDT.Rows[i]["区域(部门)包含仪表代码"].ToString();
-                            if (ExportServer.CheckData(BuildID, MeterID)== 0)
+                            string MeterID = RegionDT.Rows[i]["包含仪表代码"].ToString();
+                            if (!string.IsNullOrEmpty(MeterID))
                             {
-                                //数据有误，禁止导入
-                                btnImportRegion.Enabled = false;
-                                btnImportDepart.Enabled = false;
-                                int row = i + 1;
-                                ShowLog("第"+ row + "行建筑编码：" + BuildID + "或 仪表编码："+ MeterID + " 不存在，请输入正确的建筑编码和仪表编码");
-                                MessageBox.Show("第" + row + "行建筑编码：" + BuildID + "或 仪表编码：" + MeterID + " 不存在，请输入正确的建筑编码和仪表编码", "错误信息", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
+                                if (ExportServer.CheckData(BuildID, MeterID) == 0)
+                                {
+                                    //数据有误，禁止导入
+                                    btnImportRegion.Enabled = false;
+                                    btnImportDepart.Enabled = false;
+                                    btnEnergyItemImport.Enabled = false;
+                                    int row = i + 1;
+                                    ShowLog("第" + row + "行建筑编码：" + BuildID + "或 仪表编码：" + MeterID + " 不存在，请输入正确的建筑编码和仪表编码");
+                                    MessageBox.Show("第" + row + "行建筑编码：" + BuildID + "或 仪表编码：" + MeterID + " 不存在，请输入正确的建筑编码和仪表编码", "错误信息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
                             }
                         }
                         //数据正确，可以导入
                         btnImportRegion.Enabled = true;
                         btnImportDepart.Enabled = true;
+                        btnEnergyItemImport.Enabled = true;
                         ShowLog("检查基础数据完成，数据正确");
 
                     }
@@ -283,9 +294,15 @@ namespace CVSTool
                     break;
                 case "区域(部门)名称":
                     break;
-                case "区域(部门)包含仪表代码":
+                case "包含仪表代码":
                     break;
                 case "仪表名称":
+                    break;
+                case "一级分项编码":
+                    break;
+                case "二级分项编码":
+                    break;
+                case "三级分项编码":
                     break;
                 case "运算公式":
                     break;
@@ -313,8 +330,9 @@ namespace CVSTool
             //禁止导入
             btnImportRegion.Enabled = false;
             btnImportDepart.Enabled = false;
-            
-            
+            btnEnergyItemImport.Enabled = false;
+
+
 
         }
 
@@ -370,7 +388,7 @@ namespace CVSTool
 
         private void cboxBiuldInfo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboxFirstLoad )
+            if (comboxFirstLoad)
             {
                 comboxFirstLoad = false;
                 return;
@@ -378,7 +396,7 @@ namespace CVSTool
             string buildName = cboxBiuldInfo.GetItemText(cboxBiuldInfo.Items[cboxBiuldInfo.SelectedIndex]);
             string buildID = cboxBiuldInfo.GetItemText(cboxBiuldInfo.SelectedValue);
 
-            ShowLog("选择要导出的建筑物为：" + buildName +"  建筑代码："+ buildID);
+            ShowLog("选择要导出的建筑物为：" + buildName + "  建筑代码：" + buildID);
         }
 
         private void btnEnergyDataExport_Click(object sender, EventArgs e)
@@ -417,6 +435,28 @@ namespace CVSTool
             {
                 ShowLog("Error: 导出能耗基础数据失败！" + ex.Message);
                 MessageBox.Show("Error:  导出能耗基础数据失败！" + ex.Message);
+            }
+        }
+
+        private void btnEnergyItemImport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (0 == EnergyItemServer.ImportEnergyItem(RegionDT))
+                {
+                    ShowLog("*** 导入分项数据成功！***");
+                    MessageBox.Show("*** 导入分项数据成功！***");
+                }
+                else
+                {
+                    ShowLog("Error: 导入分项 数据失败！: 分项数据表为空，请确保数据有效！");
+                    MessageBox.Show("Error: 导入 分项 数据失败！: 分项数据表为空，请确保数据有效！");
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowLog("Error: 导入分项数据失败！" + ex.Message);
+                MessageBox.Show("Error: 导入分项数据失败！" + ex.Message);
             }
         }
     }
