@@ -23,7 +23,7 @@ namespace CVSTool.Server
                     string MeterID = RegionDT.Rows[i]["包含仪表代码"].ToString();
                     string Operator = RegionDT.Rows[i]["运算公式"].ToString();
                     string Rate = RegionDT.Rows[i]["百分率"].ToString();
-                    //导入T_ST_Region表
+                    //导入T_ST_DepartmentInfo表
                     string SQLString = @"IF EXISTS (SELECT 1 FROM T_ST_DepartmentInfo WHERE F_DepartmentID= '" + RegionID + @" ') 
                                             UPDATE T_ST_DepartmentInfo SET F_BuildID = '" + BuildID + @"', F_DepartParentID = '" +
                                             RegionParentID + @"', F_DepartmentName = '" + RegionName + @"' WHERE F_DepartmentID = '" + RegionID + @"' 
@@ -34,12 +34,12 @@ namespace CVSTool.Server
 
                     SQLHelper.ExecuteSql(SQLString);
 
-                    //导入T_ST_RegionMeter表
+                    //导入T_ST_DepartmentMeter表
                     if (!string.IsNullOrEmpty(MeterID))
                     {
                         string SQLString2 = @"IF EXISTS (SELECT 1 FROM T_ST_DepartmentMeter WHERE F_DepartmentID= '" + RegionID + @" ' AND F_MeterID='" + MeterID + @" ' ) 
-                                            UPDATE T_ST_DepartmentMeter SET F_Operator = '" + Operator + @"', F_Rate = '" +
-                                            Rate + @"'  WHERE F_DepartmentID = '" + RegionID + @"' AND F_MeterID='" + MeterID + @"';
+                                            UPDATE T_ST_DepartmentMeter SET F_Operator = '" + Operator + @"', F_Rate = " +
+                                            Rate + @"  WHERE F_DepartmentID = '" + RegionID + @"' AND F_MeterID='" + MeterID + @"';
                                         ELSE
                                             INSERT INTO T_ST_DepartmentMeter
                                             (F_DepartmentID, F_MeterID, F_Operator, F_Rate) VALUES
