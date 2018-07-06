@@ -24,15 +24,18 @@ namespace CVSTool.Server
                     string Operator = RegionDT.Rows[i]["运算公式"].ToString();
                     string Rate = RegionDT.Rows[i]["百分率"].ToString();
                     //导入T_ST_DepartmentInfo表
-                    string SQLString = @"IF EXISTS (SELECT 1 FROM T_ST_DepartmentInfo WHERE F_DepartmentID= '" + RegionID + @" ') 
+                    if (!string.IsNullOrEmpty(RegionID) && !string.IsNullOrEmpty(RegionName))
+                    {
+                        string SQLString = @"IF EXISTS (SELECT 1 FROM T_ST_DepartmentInfo WHERE F_DepartmentID= '" + RegionID + @" ') 
                                             UPDATE T_ST_DepartmentInfo SET F_BuildID = '" + BuildID + @"', F_DepartParentID = '" +
-                                            RegionParentID + @"', F_DepartmentName = '" + RegionName + @"' WHERE F_DepartmentID = '" + RegionID + @"' 
+                                                RegionParentID + @"', F_DepartmentName = '" + RegionName + @"' WHERE F_DepartmentID = '" + RegionID + @"' 
                                         ELSE
                                             INSERT INTO T_ST_DepartmentInfo
                                             (F_DepartmentID, F_BuildID, F_DepartParentID, F_DepartmentName) VALUES
                                                ( '" + RegionID + @"','" + BuildID + @"','" + RegionParentID + @"','" + RegionName + @"') ";
 
-                    SQLHelper.ExecuteSql(SQLString);
+                        SQLHelper.ExecuteSql(SQLString);
+                    }
 
                     //导入T_ST_DepartmentMeter表
                     if (!string.IsNullOrEmpty(MeterID))

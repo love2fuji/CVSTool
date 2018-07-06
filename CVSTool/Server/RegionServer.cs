@@ -25,7 +25,9 @@ namespace CVSTool.Server
                     string Operator = RegionDT.Rows[i]["运算公式"].ToString();
                     string Rate = RegionDT.Rows[i]["百分率"].ToString();
                     //导入T_ST_Region表
-                    string SQLString = @"IF EXISTS (SELECT 1 FROM T_ST_Region WHERE F_RegionID= '" + RegionID + @" ') 
+                    if (!string.IsNullOrEmpty(RegionID) && !string.IsNullOrEmpty(RegionName))
+                    {
+                        string SQLString = @"IF EXISTS (SELECT 1 FROM T_ST_Region WHERE F_RegionID= '" + RegionID + @" ') 
                                             UPDATE T_ST_Region SET F_BuildID = '" + BuildID + @"', F_RegionParentID = '" +
                                             RegionParentID + @"', F_RegionName = '" + RegionName + @"' WHERE F_RegionID = '" + RegionID + @"' 
                                         ELSE
@@ -33,11 +35,12 @@ namespace CVSTool.Server
                                             (F_RegionID, F_BuildID, F_RegionParentID, F_RegionName) VALUES
                                                ( '" + RegionID + @"','" + BuildID + @"','" + RegionParentID + @"','" + RegionName + @"') ";
 
-                    SQLHelper.ExecuteSql(SQLString);
+                        SQLHelper.ExecuteSql(SQLString);
+                    }
 
                     //导入T_ST_RegionMeter表
                     if (!string.IsNullOrEmpty(MeterID))
-                    { 
+                    {
                         string SQLString2 = @"IF EXISTS (SELECT 1 FROM T_ST_RegionMeter WHERE F_RegionID= '" + RegionID + @" ' AND F_MeterID='" + MeterID + @" ' ) 
                                             UPDATE T_ST_RegionMeter SET F_Operator = '" + Operator + @"', F_Rate = '" +
                                             Rate + @"'  WHERE F_RegionID = '" + RegionID + @"' AND F_MeterID='" + MeterID + @"';
@@ -49,13 +52,13 @@ namespace CVSTool.Server
                         SQLHelper.ExecuteSql(SQLString2);
                     }
                 }
-                return 0; 
-               
+                return 0;
+
             }
             else
             {
                 return 1;
-               
+
             }
 
         }
